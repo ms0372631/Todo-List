@@ -1,22 +1,18 @@
 // functional vs class
 // state and lifecycle
+import Homepage from "./Homepage";
+import React from "react";
+
+export const TodoContext = React.createContext();
 
 export default function App() {
   return (
-    <div className="App">
-      {/* <div>section 1. useState and useEffect</div>
-      <BasicHooksDemo />
-      <hr /> */}
-      {/* <hr />
-      <div>section 2. useRef</div>
-      <Ref /> */}
-      {/* <div>section 3. useMemo</div>
-      <Memo />
-      <hr /> */}
-      {/* <div>section 4. useCallback</div>
-      <Callback />
-      <hr /> */}
-    <p>dkk</p>
-    </div>
+    <TodoContext.Provider value={{
+      todoLists: []
+    }}>
+      <div className="App">
+        <Homepage />
+      </div>
+    </TodoContext.Provider>
   );
 }
