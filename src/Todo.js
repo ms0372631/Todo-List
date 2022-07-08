@@ -1,14 +1,51 @@
 import React, { useState, useContext } from "react";
-import { getConstantValue } from "typescript";
-import { TodoContext } from "./Homepage";
 
-export default function Todo() {
+export const TodoContext = React.createContext();
+
+export const Todo = ({name, doneStatus, number}) => {
+
+  const [localNum, setNumber] = useState(number = 1)
+  const [localName, setName] = useState(name);
+  const [editStatus, setEditStatus] = useState(false);
+  const [edtiName, setEditName] = useState(localName);
+
+  const getValue = () => { 
+    return {
+      name,
+      localNum,
+      doneStatus
+    }
+  }
+  
+  let editButton = !editStatus ? 
+  <button onClick={(e) => setEditStatus(!editStatus)}>edit</button> 
+  : 
+  <>
+    <input 
+      type="text"
+      value={edtiName}
+      onChange={e => setEditName(e.target.value)}
+    /> 
+    <button onClick={(e) => {setName(edtiName), setEditName(""), setEditStatus(!editStatus)}}>submit</button>
+  </>;
 
   return (
     <>
-      <TodoContext.Consumer>
-        {value => value.map(todo => (<p>{todo}</p>))}
-      </TodoContext.Consumer>
+      <TodoContext.Provider value={(getValue())}>
+        <li>
+          <input 
+            type="number" 
+            value={localNum} 
+            onChange={(e) => setNumber(e.target.value)}
+          />
+          {localName}
+          {editButton}
+          <button>
+            delete
+          </button>
+        </li>
+        <br></br>
+      </TodoContext.Provider>
     </>
   )
-}
+};
