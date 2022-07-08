@@ -2,12 +2,18 @@ import React, { useState, useContext } from "react";
 
 export const TodoContext = React.createContext();
 
-export const Todo = ({name, doneStatus, number}) => {
+export const Todo = ({name, done, number}) => {
 
   const [localNum, setNumber] = useState(number = 1)
   const [localName, setName] = useState(name);
   const [editStatus, setEditStatus] = useState(false);
   const [edtiName, setEditName] = useState(localName);
+  const [doneStatus, setDoneStatus] = useState(done)
+
+  const textStyles = {
+    textDecoration: doneStatus ? "line-through" : "none"
+  }; 
+
 
   const getValue = () => { 
     return {
@@ -18,7 +24,7 @@ export const Todo = ({name, doneStatus, number}) => {
   }
   
   let editButton = !editStatus ? 
-  <button onClick={(e) => setEditStatus(!editStatus)}>edit</button> 
+  <button disabled={doneStatus} onClick={() => setEditStatus(!editStatus)}>edit</button> 
   : 
   <>
     <input 
@@ -38,7 +44,9 @@ export const Todo = ({name, doneStatus, number}) => {
             value={localNum} 
             onChange={(e) => setNumber(e.target.value)}
           />
-          {localName}
+          <span style={textStyles} onClick={() => setDoneStatus(!doneStatus)}>
+            {localName}
+          </span>
           {editButton}
           <button>
             delete
