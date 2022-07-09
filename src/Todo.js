@@ -53,7 +53,7 @@ export const Todo = ({id, name, done, number, setTodoLists, todoLists}) => {
       value={editName}
       onChange={e => setEditName(e.target.value)}
     /> 
-    <button onClick={(e) => {setName(editName), setEditName(""), setEditStatus(!editStatus)}}>submit</button>
+    <button onClick={(e) => {setName(editName), setEditName(""), setEditStatus(!editStatus)}}>Save</button>
   </>;
 
   return (

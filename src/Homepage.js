@@ -9,42 +9,45 @@ export default Homepage => {
   const [inputWord, setInputWord] = useState("");
   const [showStatus, setShowStatus] = useState("All");
   const [searchWord, setSearchWord] = useState("");
+  const [finalSeachWord, setFinalSearchWord] = useState("");
+
+ 
   
   let newTodoLists; 
 
   if (showStatus === "All") {
-    newTodoLists = todoLists.slice().sort(function (a, b) {
+    newTodoLists = todoLists.slice().filter(todo => todo.name.includes(finalSeachWord)).sort(function (a, b) {
       return a.number - b.number;
     });
   }
   else if (showStatus === "Processing") {
-    newTodoLists = todoLists.slice().filter(todo => todo.doneStatus === false).sort(function (a, b) {
+    newTodoLists = todoLists.slice().filter(todo => todo.doneStatus === false && todo.name.includes(finalSeachWord)).sort(function (a, b) {
       return a.number - b.number;
     });
   }
   else if (showStatus === "Done") {
-    newTodoLists = todoLists.slice().filter(todo => todo.doneStatus === true).sort(function (a, b) {
+    newTodoLists = todoLists.slice().filter(todo => todo.doneStatus === true && todo.name.includes(finalSeachWord)).sort(function (a, b) {
       return a.number - b.number;
     });
   }
 
   useEffect(() => {
     if (showStatus === "All") {
-      newTodoLists = todoLists.slice().sort(function (a, b) {
+      newTodoLists = todoLists.slice().filter(todo => todo.name.includes(finalSeachWord)).sort(function (a, b) {
         return a.number - b.number;
       });
     }
     else if (showStatus === "Processing") {
-      newTodoLists = todoLists.slice().filter(todo => todo.doneStatus === false).sort(function (a, b) {
+      newTodoLists = todoLists.slice().filter(todo => todo.doneStatus === false && todo.name.includes(finalSeachWord)).sort(function (a, b) {
         return a.number - b.number;
       });
     }
     else if (showStatus === "Done") {
-      newTodoLists = todoLists.slice().filter(todo => todo.doneStatus === true).sort(function (a, b) {
+      newTodoLists = todoLists.slice().filter(todo => todo.doneStatus === true && todo.name.includes(finalSeachWord)).sort(function (a, b) {
         return a.number - b.number;
       });
     }
-  }, [showStatus]);
+  }, [showStatus, finalSeachWord]);
 
   const getValue = () => {
     return {
@@ -84,8 +87,12 @@ export default Homepage => {
   
   return (
     <>
+      <input name="search-word" placeholder="Search the to do list" value={searchWord} onChange={(e) => {setSearchWord(e.target.value)}}/>
+      <button onClick={() => setFinalSearchWord(searchWord)}>Search</button>
+      <br/>
       {component}
       <input 
+        name="submit-word"
         type="text" 
         placeholder="Come on!!! "
         value={inputWord} 
