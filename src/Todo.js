@@ -1,38 +1,41 @@
 import React, { useState, useContext } from "react";
-
 export const TodoContext = React.createContext();
 
-export const Todo = ({name, done, number}) => {
+export const Todo = ({id, name, done, number, setTodoLists, todoLists}) => {
 
-  const [localNum, setNumber] = useState(number = 1)
+  const [localNum, setNumber] = useState(number)
   const [localName, setName] = useState(name);
   const [editStatus, setEditStatus] = useState(false);
-  const [edtiName, setEditName] = useState(localName);
-  const [doneStatus, setDoneStatus] = useState(done)
+  const [editName, setEditName] = useState(localName);
+  const [doneStatus, setDoneStatus] = useState(done);
 
   const textStyles = {
     textDecoration: doneStatus ? "line-through" : "none"
   }; 
-
+ 
+  const updateTodoList = () => {
+    const oldTodoLists = todoLists.filter(todo => todo.id !== id);
+    setTodoLists([...oldTodoLists, {id: id, name: editName, doneStatus: doneStatus, number: localNum}]);
+  }
 
   const getValue = () => { 
     return {
       name,
       localNum,
-      doneStatus
+      doneStatus,
     }
   }
-  
+
   let editButton = !editStatus ? 
   <button disabled={doneStatus} onClick={() => setEditStatus(!editStatus)}>edit</button> 
   : 
   <>
     <input 
       type="text"
-      value={edtiName}
+      value={editName}
       onChange={e => setEditName(e.target.value)}
     /> 
-    <button onClick={(e) => {setName(edtiName), setEditName(""), setEditStatus(!editStatus)}}>submit</button>
+    <button onClick={(e) => {setName(editName), setEditName(""), setEditStatus(!editStatus)}}>submit</button>
   </>;
 
   return (
@@ -41,8 +44,9 @@ export const Todo = ({name, done, number}) => {
         <li>
           <input 
             type="number" 
+            min="0"
             value={localNum} 
-            onChange={(e) => setNumber(e.target.value)}
+            onChange={(e) => {setNumber(parseInt(e.target.value)), updateTodoList()}}
           />
           <span style={textStyles} onClick={() => setDoneStatus(!doneStatus)}>
             {localName}
