@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect } from "react";
-export const TodoContext = React.createContext();
 
 export const Todo = ({id, name, done, number, setTodoLists, todoLists}) => {
 
@@ -12,7 +11,6 @@ export const Todo = ({id, name, done, number, setTodoLists, todoLists}) => {
   const textStyles = {
     textDecoration: doneStatus ? "line-through" : "none"
   }; 
-
 
   useEffect(() => {
     updateTodoList();
@@ -36,14 +34,6 @@ export const Todo = ({id, name, done, number, setTodoLists, todoLists}) => {
   })
  
 
-  const getValue = () => { 
-    return {
-      name,
-      localNum,
-      doneStatus,
-    }
-  }
-
   let editButton = !editStatus ? 
   <button disabled={doneStatus} onClick={() => setEditStatus(!editStatus)}>edit</button> 
   : 
@@ -58,24 +48,22 @@ export const Todo = ({id, name, done, number, setTodoLists, todoLists}) => {
 
   return (
     <>
-      <TodoContext.Provider value={(getValue())}>
-        <li>
-          <input 
-            type="number" 
-            min="0"
-            value={localNum} 
-            onChange={(e) => {setNumber(parseInt(e.target.value))}}
-          />
-          <span style={textStyles} onClick={() => setDoneStatus(!doneStatus)}>
-            {localName}
-          </span>
-          {editButton}
-          <button onClick={() => deleteTodo()}>
-            delete
-          </button>
-        </li>
-        <br></br>
-      </TodoContext.Provider>
+      <li>
+        <input 
+          type="number" 
+          min="0"
+          value={localNum} 
+          onChange={(e) => {setNumber(parseInt(e.target.value))}}
+        />
+        <span style={textStyles} onClick={() => setDoneStatus(!doneStatus)}>
+          {localName}
+        </span>
+        {editButton}
+        <button onClick={() => deleteTodo()}>
+          delete
+        </button>
+      </li>
+      <br></br>
     </>
   )
 };
