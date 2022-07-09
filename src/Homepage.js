@@ -11,8 +11,10 @@ export default Homepage => {
   const [searchWord, setSearchWord] = useState("");
   const [finalSeachWord, setFinalSearchWord] = useState("");
 
- 
-  
+  const textStyles = {
+
+  }
+
   let newTodoLists; 
 
   if (showStatus === "All") {
@@ -73,13 +75,13 @@ export default Homepage => {
       />
       ))}
       <div>
-        <div onClick={() => setShowStatus("All")}>
+        <div style={{color: showStatus === "All" ? "red" : "black"}} onClick={() => setShowStatus("All")}>
           All
         </div>
-        <div onClick={() => setShowStatus("Processing")}>
+        <div style={{color: showStatus === "Processing" ? "red" : "black"}} onClick={() => setShowStatus("Processing")}>
           Processing
         </div>
-        <div onClick={() => setShowStatus("Done")}>
+        <div style={{color: showStatus === "Done" ? "red" : "black"}} onClick={() => setShowStatus("Done")}>
           Done
         </div>
       </div>
