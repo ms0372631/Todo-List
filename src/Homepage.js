@@ -9,16 +9,21 @@ export default Homepage => {
   const [inputWord, setInputWord] = useState("");
   const [searchWord, setSearchWord] = useState("");
   const [orderChanged, setOrderChanged] = useState(false);
-
+  
   let newTodoLists = todoLists.slice().sort(function (a, b) {
     return a.number - b.number;
   });
+
+  useEffect(() => {
+    console.log(todoLists);
+  }, [todoLists]);
 
   const getValue = () => {
     return {
       todoLists,
     }
   }
+
 
   let component = todoLists.length === 0 ? 
     <h1>No Todos Here...</h1> 

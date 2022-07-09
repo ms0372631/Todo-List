@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 export const TodoContext = React.createContext();
 
 export const Todo = ({id, name, done, number, setTodoLists, todoLists}) => {
@@ -12,11 +12,17 @@ export const Todo = ({id, name, done, number, setTodoLists, todoLists}) => {
   const textStyles = {
     textDecoration: doneStatus ? "line-through" : "none"
   }; 
- 
-  const updateTodoList = () => {
+
+
+  useEffect(() => {
+    updateTodoList();
+  }, [localNum]);
+
+  const updateTodoList = (() => {
     const oldTodoLists = todoLists.filter(todo => todo.id !== id);
     setTodoLists([...oldTodoLists, {id: id, name: editName, doneStatus: doneStatus, number: localNum}]);
-  }
+  })
+ 
 
   const getValue = () => { 
     return {
@@ -46,7 +52,7 @@ export const Todo = ({id, name, done, number, setTodoLists, todoLists}) => {
             type="number" 
             min="0"
             value={localNum} 
-            onChange={(e) => {setNumber(parseInt(e.target.value)), updateTodoList()}}
+            onChange={(e) => {setNumber(parseInt(e.target.value))}}
           />
           <span style={textStyles} onClick={() => setDoneStatus(!doneStatus)}>
             {localName}
