@@ -19,8 +19,20 @@ export const Todo = ({id, name, done, number, setTodoLists, todoLists}) => {
   }, [localNum, editName, doneStatus]);
 
   const updateTodoList = (() => {
-    const oldTodoLists = todoLists.filter(todo => todo.id !== id);
-    setTodoLists([...oldTodoLists, {id: id, name: localName, doneStatus: doneStatus, number: localNum}]);
+    let idx = 0, newTodoLists = todoLists.slice();
+    for (let i = 0; i < newTodoLists.length; ++i) {
+      if (newTodoLists[i].id == id)
+        idx = i;
+    }
+    newTodoLists[idx].name = localName;
+    newTodoLists[idx].number = localNum;
+    newTodoLists[idx].doneStatus = doneStatus;
+    setTodoLists(newTodoLists);
+  })
+
+  const deleteTodo = (() => {
+    const newTodoLists = todoLists.filter(todo => todo.id !== id);
+    setTodoLists([...newTodoLists]);
   })
  
 
@@ -58,7 +70,7 @@ export const Todo = ({id, name, done, number, setTodoLists, todoLists}) => {
             {localName}
           </span>
           {editButton}
-          <button>
+          <button onClick={() => deleteTodo()}>
             delete
           </button>
         </li>
