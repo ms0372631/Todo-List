@@ -6,7 +6,7 @@ export const Todo = ({id, name, done, number, setTodoLists, todoLists}) => {
   const [localNum, setNumber] = useState(number)
   const [localName, setName] = useState(name);
   const [editStatus, setEditStatus] = useState(false);
-  const [editName, setEditName] = useState(localName);
+  const [editName, setEditName] = useState(name);
   const [doneStatus, setDoneStatus] = useState(done);
 
   const textStyles = {
@@ -16,11 +16,11 @@ export const Todo = ({id, name, done, number, setTodoLists, todoLists}) => {
 
   useEffect(() => {
     updateTodoList();
-  }, [localNum]);
+  }, [localNum, editName, doneStatus]);
 
   const updateTodoList = (() => {
     const oldTodoLists = todoLists.filter(todo => todo.id !== id);
-    setTodoLists([...oldTodoLists, {id: id, name: editName, doneStatus: doneStatus, number: localNum}]);
+    setTodoLists([...oldTodoLists, {id: id, name: localName, doneStatus: doneStatus, number: localNum}]);
   })
  
 
