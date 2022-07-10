@@ -11,10 +11,6 @@ export default Homepage => {
   const [searchWord, setSearchWord] = useState("");
   const [finalSeachWord, setFinalSearchWord] = useState("");
 
-  const textStyles = {
-
-  }
-
   let newTodoLists; 
 
   if (showStatus === "All") {
@@ -49,19 +45,33 @@ export default Homepage => {
         return a.number - b.number;
       });
     }
-  }, [showStatus, finalSeachWord]);
+  }, [showStatus, finalSeachWord, todoLists, inputWord]);
 
   const getValue = () => {
     return {
       todoLists,
     }
   }
+  
+  const handleSubmitTodo = (e) => {
+    e.preventDefault();
+    setTodoLists([...todoLists, {id: Date.now(), name: inputWord, doneStatus: false, number: 1}]);
+    setInputWord("");
+  }
 
+  const handleSubmitSearch = (e) => {
+    e.preventDefault();
+    setFinalSearchWord(searchWord);
+  }
 
   let component = todoLists.length === 0 ? 
     <h1>No Todos Here...</h1> 
     : 
     <>
+      <form onSubmit={((e) => handleSubmitSearch(e))}>
+        <input name="search-word" placeholder="Search the to do list" value={searchWord} onChange={(e) => {setSearchWord(e.target.value)}}/>
+      </form>
+      <br/>
       {newTodoLists.map((todo, idx) => (
       <Todo 
         key={todo.id}
@@ -89,18 +99,16 @@ export default Homepage => {
   
   return (
     <>
-      <input name="search-word" placeholder="Search the to do list" value={searchWord} onChange={(e) => {setSearchWord(e.target.value)}}/>
-      <button onClick={() => setFinalSearchWord(searchWord)}>Search</button>
-      <br/>
       {component}
-      <input 
-        name="submit-word"
-        type="text" 
-        placeholder="Come on!!! "
-        value={inputWord} 
-        onChange={(e) => setInputWord(e.target.value)}
-      />
-      <button onClick={() => {setTodoLists([...todoLists, {id: Date.now(), name: inputWord, doneStatus: false, number: 1}]), setInputWord("")}}>Submit</button>
+      <form onSubmit={(e) => handleSubmitTodo(e)}>
+        <input 
+          name="submit-word"
+          type="text" 
+          placeholder="Come on!!! "
+          value={inputWord} 
+          onChange={(e) => setInputWord(e.target.value)}
+        />
+      </form>
     </>
   )
 }

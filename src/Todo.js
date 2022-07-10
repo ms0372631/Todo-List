@@ -32,18 +32,26 @@ export const Todo = ({id, name, done, number, setTodoLists, todoLists}) => {
     const newTodoLists = todoLists.filter(todo => todo.id !== id);
     setTodoLists([...newTodoLists]);
   })
+
+  const handleEditName = (e) => {
+    e.preventDefault();
+    setName(editName);
+    setEditName("");
+    setEditStatus(!editStatus)
+  }
  
 
   let editButton = !editStatus ? 
   <button disabled={doneStatus} onClick={() => setEditStatus(!editStatus)}>edit</button> 
   : 
   <>
-    <input 
-      type="text"
-      value={editName}
-      onChange={e => setEditName(e.target.value)}
-    /> 
-    <button onClick={(e) => {setName(editName), setEditName(""), setEditStatus(!editStatus)}}>Save</button>
+    <form onSubmit={(e) => handleEditName(e)}>
+      <input 
+        type="text"
+        value={editName}
+        onChange={e => setEditName(e.target.value)}
+      /> 
+    </form>
   </>;
 
   return (
