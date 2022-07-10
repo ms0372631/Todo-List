@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 export const Todo = ({id, name, done, number, setTodoLists, todoLists}) => {
 

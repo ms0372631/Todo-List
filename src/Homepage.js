@@ -1,4 +1,4 @@
-import React, { useState, userContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Todo } from "./Todo";
 
 export default Homepage => {
