@@ -1,8 +1,6 @@
 import React, { useState, userContext, useEffect } from "react";
 import { Todo } from "./Todo";
 
-import { TodoContext } from "./Todo";
-
 export default Homepage => {
   
   const [todoLists, setTodoLists] = useState([]);
@@ -46,12 +44,6 @@ export default Homepage => {
       });
     }
   }, [showStatus, finalSeachWord, todoLists, inputWord]);
-
-  const getValue = () => {
-    return {
-      todoLists,
-    }
-  }
   
   const handleSubmitTodo = (e) => {
     e.preventDefault();
