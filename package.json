@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "keywords": [],
+  "homepage":  "https://ms0372631.github.io/Todo-List",
   "main": "src/index.js",
   "dependencies": {
     "@babel/runtime": "7.13.8",
