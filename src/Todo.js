@@ -65,8 +65,8 @@ export const Todo = ({id, name, done, number, setTodoLists, todoLists}) => {
         />
         <span style={textStyles} onClick={() => setDoneStatus(!doneStatus)}>
           {localName}
-          {editButton}
         </span>
+        {editButton}
         <button onClick={() => deleteTodo()}>
           delete
         </button>
